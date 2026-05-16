@@ -1,42 +1,491 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="google-site-verification" content="uQVQvib9O00oQFIT-tXdnkU3Vh5VSFZw2b3WhCHTCns
-" />
-<title>Maternity Leave Calculators | Pay, Eligibility, Baby Costs & Planning Tools</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="uQVQvib9O00oQFIT-tXdnkU3Vh5VSFZw2b3WhCHTCns" />
+    <title>Maternity & Paternity Leave Calculator | Pay, Eligibility & Planning</title>
+    <meta name="description" content="Calculate maternity/paternity leave eligibility, benefits, and pay. FMLA calculator, NJ leave estimator, and financial planning tools for expecting parents.">
+    <meta name="keywords" content="maternity leave calculator, paternity pay calculator, fmla pay calculator, maternity calculator, nj maternity leave, parental leave pay">
+    <link rel="stylesheet" href="leave-style.css">
 </head>
 <body>
+    <header class="header">
+        <div class="container">
+            <h1>Maternity & Paternity Leave Calculator</h1>
+            <p class="subtitle">Calculate leave eligibility, estimate benefits pay, and plan your parental leave</p>
+        </div>
+    </header>
 
-<h1>Maternity & Family Leave Calculators</h1>
 
-<p>Plan your maternity or paternity leave, estimate pay, check eligibility, and budget for your baby with these simple tools. Designed for quick planning and decision-making.</p>
+<main>
+    <section class="intro">
+        <div class="container">
+            <h2>Plan Your Parental Leave With Confidence</h2>
+            <p>
+                Maternity and paternity leave policies vary dramatically by state, employer, and situation. Without proper planning, 
+                you might miss out on benefits or face financial hardship. These calculators help you understand your eligibility, 
+                estimate your benefits, and plan finances before welcoming your baby.
+            </p>
+            <p>
+                Whether you're covered under FMLA, state-mandated leave (like NJ's TDI/FLI), or employer policies, 
+                our tools provide personalized estimates based on your specific situation.
+            </p>
+        </div>
+    </section>
 
-<div class="card">
-<ul>
-<li><a href="maternity/index.html">Maternity Leave Calculator</a></li>
-<li><a href="paternity/index.html">Paternity Leave Calculator</a></li>
-<li><a href="pay/index.html">Maternity Pay Calculator</a></li>
-<li><a href="fmla/index.html">FMLA Eligibility Calculator</a></li>
-<li><a href="cost/index.html">Baby Cost Estimator</a></li>
-<li><a href="shower-budget/index.html">Baby Shower Budget Calculator</a></li>
-<li><a href="shower-date/index.html">Baby Shower Date Calculator</a></li>
-</ul>
-</div>
+    <!-- MATERNITY/PATERNITY LEAVE CALCULATOR -->
+    <section class="featured-tool maternity-section">
+        <div class="container">
+            <h2>Maternity & Paternity Leave Calculator</h2>
+            <p>Calculate your leave eligibility, timeline, and estimated benefits.</p>
+            
+            <div class="calculator leave-calc">
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label for="leaveType">Leave Type</label>
+                        <select id="leaveType" onchange="calculateLeave()">
+                            <option value="maternity">Maternity Leave</option>
+                            <option value="paternity">Paternity Leave</option>
+                            <option value="parental">Parental Leave (Either Parent)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="workState">State/Location</label>
+                        <select id="workState" onchange="calculateLeave()">
+                            <option value="nj">New Jersey (TDI + FLI)</option>
+                            <option value="ny">New York (PFL)</option>
+                            <option value="ca">California (PDL + PFL)</option>
+                            <option value="federal">Federal (FMLA Only)</option>
+                            <option value="other">Other State</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="dueDate">Due Date / Birth Date</label>
+                        <input type="date" id="dueDate" onchange="calculateLeave()">
+                    </div>
+                    <div class="input-group">
+                        <label for="employeeAnnualSalary">Annual Salary ($)</label>
+                        <input type="number" id="employeeAnnualSalary" placeholder="60000" min="0" value="60000" onchange="calculateLeave()">
+                    </div>
+                    <div class="input-group">
+                        <label for="employeeCompanySize">Company Size</label>
+                        <select id="employeeCompanySize" onchange="calculateLeave()">
+                            <option value="small">1-49 employees</option>
+                            <option value="medium">50+ employees</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="employmentMonths">Months at Company</label>
+                        <input type="number" id="employmentMonths" placeholder="12" min="0" max="600" value="12" onchange="calculateLeave()">
+                    </div>
+                </div>
 
-<h2>How These Tools Help</h2>
-<p>Understanding your leave options and financial planning is essential before and after birth. These calculators provide quick estimates so you can plan time off, income, and expenses effectively.</p>
+                <div class="calc-results" id="leaveResults" style="display: none;">
+                    <div class="result-group">
+                        <div class="result-item">
+                            <span class="label">Leave Duration</span>
+                            <span class="value" id="leaveDuration">0 weeks</span>
+                            <span class="hint">Paid + unpaid combined</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Paid Leave Weeks</span>
+                            <span class="value" id="paidWeeks">0</span>
+                            <span class="hint">Salary replacement</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Estimated Weekly Benefit</span>
+                            <span class="value" id="weeklyBenefit">$0</span>
+                            <span class="hint">During paid leave</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Total Benefit Amount</span>
+                            <span class="value" id="totalBenefit">$0</span>
+                            <span class="hint">For entire leave period</span>
+                        </div>
+                    </div>
 
-<h3>Related Searches</h3>
-<ul>
-<li>maternity leave pay calculator</li>
-<li>how long is maternity leave</li>
-<li>paternity leave USA calculator</li>
-<li>FMLA eligibility requirements</li>
-<li>cost of having a baby first year</li>
-<li>baby shower budget planner</li>
-</ul>
+                    <div class="leave-timeline">
+                        <h3>Leave Timeline</h3>
+                        <div id="timelineDetails"></div>
+                    </div>
+
+                    <div class="leave-notes">
+                        <h3>Important Notes</h3>
+                        <ul id="leaveNotesList"></ul>
+                    </div>
+                </div>
+
+                <div class="quick-scenarios">
+                    <p class="scenario-label">Common scenarios:</p>
+                    <div class="scenario-buttons">
+                        <button class="scenario-btn" onclick="setLeaveScenario('maternity', 'nj', 60000)">NJ Maternity</button>
+                        <button class="scenario-btn" onclick="setLeaveScenario('paternity', 'nj', 60000)">NJ Paternity</button>
+                        <button class="scenario-btn" onclick="setLeaveScenario('maternity', 'federal', 60000)">Federal FMLA</button>
+                        <button class="scenario-btn" onclick="setLeaveScenario('parental', 'ca', 60000)">CA Parental</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FMLA PAY CALCULATOR -->
+    <section class="featured-tool fmla-section">
+        <div class="container">
+            <h2>FMLA Pay Calculator</h2>
+            <p>Estimate your pay during FMLA leave (unpaid time off with job protection).</p>
+            
+            <div class="calculator fmla-calc">
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label for="fmlaWeeks">FMLA Weeks Needed</label>
+                        <input type="number" id="fmlaWeeks" placeholder="12" min="0" max="26" value="12" onchange="calculateFMLA()">
+                    </div>
+                    <div class="input-group">
+                        <label for="fmlaWeeklySalary">Weekly Salary ($)</label>
+                        <input type="number" id="fmlaWeeklySalary" placeholder="1154" min="0" value="1154" onchange="calculateFMLA()">
+                    </div>
+                    <div class="input-group">
+                        <label for="fmlaEmployerContinuesHealth">Employer Pays Health Insurance?</label>
+                        <select id="fmlaEmployerContinuesHealth" onchange="calculateFMLA()">
+                            <option value="yes">Yes (typical)</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="fmlaPaidDaysAvailable">Paid PTO Days Available</label>
+                        <input type="number" id="fmlaPaidDaysAvailable" placeholder="10" min="0" value="10" onchange="calculateFMLA()">
+                    </div>
+                    <div class="input-group">
+                        <label for="fmlaPaidDayValue">Daily Paid Rate ($)</label>
+                        <input type="number" id="fmlaPaidDayValue" placeholder="231" min="0" value="231" onchange="calculateFMLA()">
+                    </div>
+                </div>
+
+                <div class="calc-results" id="fmlaResults" style="display: none;">
+                    <div class="result-group">
+                        <div class="result-item">
+                            <span class="label">Unpaid Weeks</span>
+                            <span class="value" id="fmlaUnpaidWeeks">0</span>
+                            <span class="hint">No income from employer</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Income Loss</span>
+                            <span class="value" id="fmlaIncomeLoss">$0</span>
+                            <span class="hint">From unpaid leave</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Paid PTO Used</span>
+                            <span class="value" id="fmlaPaidPTO">$0</span>
+                            <span class="hint">If applied to leave</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Health Insurance Cost</span>
+                            <span class="value" id="fmlaHealthCost">Covered</span>
+                            <span class="hint">During FMLA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-scenarios">
+                    <p class="scenario-label">Quick scenarios:</p>
+                    <div class="scenario-buttons">
+                        <button class="scenario-btn" onclick="setFMLAScenario(12, 1154, 'yes', 10)">Standard 12-Week</button>
+                        <button class="scenario-btn" onclick="setFMLAScenario(8, 1154, 'yes', 5)">8-Week + PTO</button>
+                        <button class="scenario-btn" onclick="setFMLAScenario(6, 1154, 'no', 0)">6-Week No PTO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEAVE TYPES & ELIGIBILITY -->
+    <section class="leave-guide">
+        <div class="container">
+            <h2>Understanding Parental Leave & Pay</h2>
+            
+            <h3>Types of Parental Leave</h3>
+            <p>
+                Different leave types provide different protections and pay. Most parents use a combination:
+            </p>
+
+            <div class="leave-types-grid">
+                <div class="leave-type-card">
+                    <h4>FMLA (Federal)</h4>
+                    <p><strong>Duration:</strong> Up to 12 weeks unpaid</p>
+                    <p><strong>Pay:</strong> Unpaid (but job protection)</p>
+                    <p><strong>Eligibility:</strong> 50+ employee companies, 12+ months employed</p>
+                    <p><strong>Applies to:</strong> All states</p>
+                </div>
+                <div class="leave-type-card">
+                    <h4>State Disability Insurance (TDI)</h4>
+                    <p><strong>Duration:</strong> Varies by state (usually 4-6 weeks)</p>
+                    <p><strong>Pay:</strong> ~2/3 salary (capped)</p>
+                    <p><strong>Eligibility:</strong> Contribution required by state</p>
+                    <p><strong>Applies to:</strong> NJ, NY, RI, CA, others</p>
+                </div>
+                <div class="leave-type-card">
+                    <h4>Paid Family Leave (PFL)</h4>
+                    <p><strong>Duration:</strong> 6-26 weeks depending on state</p>
+                    <p><strong>Pay:</strong> 50-85% salary replacement</p>
+                    <p><strong>Eligibility:</strong> Varies by state, contribution required</p>
+                    <p><strong>Applies to:</strong> CA, NY, NJ, others</p>
+                </div>
+                <div class="leave-type-card">
+                    <h4>Employer Policy</h4>
+                    <p><strong>Duration:</strong> Varies (0-26+ weeks)</p>
+                    <p><strong>Pay:</strong> 0-100% salary replacement</p>
+                    <p><strong>Eligibility:</strong> Company-specific</p>
+                    <p><strong>Applies to:</strong> Large tech, finance, healthcare companies</p>
+                </div>
+            </div>
+
+            <h3>State Comparisons</h3>
+            <p>
+                Leave benefits vary dramatically by state. Here's how major states compare for maternity leave:
+            </p>
+
+            <div class="state-comparison-grid">
+                <div class="state-card">
+                    <h4>New Jersey (NJ)</h4>
+                    <ul>
+                        <li><strong>TDI:</strong> Up to 6 weeks @ 2/3 salary (capped $752/week)</li>
+                        <li><strong>FLI:</strong> Up to 12 weeks @ 2/3 salary (after TDI)</li>
+                        <li><strong>Total Paid:</strong> 18 weeks (12+6)</li>
+                        <li><strong>FMLA:</strong> +12 weeks unpaid with job protection</li>
+                    </ul>
+                </div>
+                <div class="state-card">
+                    <h4>California (CA)</h4>
+                    <ul>
+                        <li><strong>SDI:</strong> Up to 4 weeks @ 55-60% salary</li>
+                        <li><strong>PFL:</strong> Up to 8 weeks @ 55% salary</li>
+                        <li><strong>Total Paid:</strong> 12 weeks</li>
+                        <li><strong>FMLA:</strong> +12 weeks unpaid with job protection</li>
+                    </ul>
+                </div>
+                <div class="state-card">
+                    <h4>New York (NY)</h4>
+                    <ul>
+                        <li><strong>DBL:</strong> Up to 6 weeks @ ~50% salary (capped)</li>
+                        <li><strong>PFL:</strong> Up to 10 weeks @ 50-67% salary</li>
+                        <li><strong>Total Paid:</strong> 16 weeks (6+10)</li>
+                        <li><strong>FMLA:</strong> +12 weeks unpaid with job protection</li>
+                    </ul>
+                </div>
+                <div class="state-card">
+                    <h4>Federal Only (Most States)</h4>
+                    <ul>
+                        <li><strong>FMLA:</strong> 12 weeks unpaid only</li>
+                        <li><strong>Paid Leave:</strong> Depends on employer policy</li>
+                        <li><strong>Total Paid:</strong> Often 0-4 weeks (company dependent)</li>
+                        <li><strong>Note:</strong> No mandatory paid leave</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>FMLA Eligibility Requirements</h3>
+            <p>
+                To qualify for FMLA protection, you must meet ALL these requirements:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li><strong>Employer Size:</strong> Work for company with 50+ employees within 75 miles</li>
+                <li><strong>Tenure:</strong> Employed for at least 12 months (doesn't need to be continuous)</li>
+                <li><strong>Hours:</strong> Worked 1,250+ hours in past 12 months (~24 hours/week)</li>
+                <li><strong>Covered Reason:</strong> Birth, bonding, serious health condition, military caregiver</li>
+                <li><strong>Federal Employees:</strong> Different rules apply; consult OPM</li>
+            </ul>
+
+            <h3>How Benefit Payments Work</h3>
+            <p>
+                State disability and family leave programs calculate benefits based on your earnings:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li><strong>Calculation:</strong> Benefit = (Average Quarterly Wage / 26) × Replacement Rate</li>
+                <li><strong>Cap:</strong> States cap maximum weekly benefit (NJ: $752/week)</li>
+                <li><strong>Minimum:</strong> Usually $30-50/week even if low-wage</li>
+                <li><strong>Taxable:</strong> Treated as taxable income (taxes not withheld, you owe)</li>
+                <li><strong>Timing:</strong> Payments usually 2 weeks after claim submission</li>
+            </ul>
+
+            <h3>Tax Implications</h3>
+            <p>
+                Don't forget taxes! Maternity benefits are taxable income:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li>State disability/family leave = federal taxable income</li>
+                <li>Estimate: 20-25% taxes owed on benefits</li>
+                <li>Plan ahead: Budget for tax liability or make estimated tax payments</li>
+                <li>Talk to accountant about withholding during leave</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FINANCIAL PLANNING -->
+    <section class="financial-planning">
+        <div class="container">
+            <h2>Financial Planning for Parental Leave</h2>
+            
+            <h3>Budget Scenarios</h3>
+            <div class="budget-scenarios-grid">
+                <div class="budget-card">
+                    <h4>Best Case Scenario</h4>
+                    <p><strong>Situation:</strong> State paid leave + employer top-up + PTO</p>
+                    <p><strong>Income during leave:</strong> 90-100% normal salary</p>
+                    <p><strong>Who gets this:</strong> Tech companies, finance, large corporations</p>
+                    <p><strong>Planning:</strong> Focus on childcare costs, not income gap</p>
+                </div>
+                <div class="budget-card">
+                    <h4>Typical Scenario</h4>
+                    <p><strong>Situation:</strong> State paid leave + partial PTO</p>
+                    <p><strong>Income during leave:</strong> 50-70% normal salary</p>
+                    <p><strong>Who gets this:</strong> Most NJ, CA, NY employees</p>
+                    <p><strong>Planning:</strong> 3-6 months emergency fund for gap</p>
+                </div>
+                <div class="budget-card">
+                    <h4>Challenging Scenario</h4>
+                    <p><strong>Situation:</strong> FMLA only (unpaid) or minimal state benefits</p>
+                    <p><strong>Income during leave:</strong> 0-25% normal salary</p>
+                    <p><strong>Who gets this:</strong> Most states outside CA/NJ/NY</p>
+                    <p><strong>Planning:</strong> 6-12 months emergency fund critical</p>
+                </div>
+            </div>
+
+            <h3>Costs to Budget For</h3>
+            <p>
+                Beyond lost income, expect these expenses during parental leave:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li><strong>Childcare:</strong> $1,000-3,000/month (daycare or nanny)</li>
+                <li><strong>Medical:</strong> Hospital bills (even with insurance): $500-5,000+</li>
+                <li><strong>Baby Gear:</strong> Crib, car seat, stroller: $2,000-5,000 upfront</li>
+                <li><strong>Diapers & Formula:</strong> $150-300/month first year</li>
+                <li><strong>Clothing & Supplies:</strong> $50-100/month</li>
+                <li><strong>Increased Utilities:</strong> +$50-100/month</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- OTHER TOOLS -->
+    <section class="other-tools">
+        <div class="container">
+            <h2>Related Parental Planning Tools</h2>
+            
+            <h3>Leave & Benefits Calculators</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4><a href="maternity/index.html">📅 Maternity Leave Timeline</a></h4>
+                    <p>Plan when to start leave and when to return based on due date.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="paternity/index.html">👨‍👨‍👧 Paternity Leave Calculator</a></h4>
+                    <p>Calculate paternity leave eligibility and benefits by state.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="fmla-eligibility/index.html">✓ FMLA Eligibility Checker</a></h4>
+                    <p>Quick check: Are you eligible for FMLA protection?</p>
+                </div>
+            </div>
+
+            <h3>Financial Planning</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4><a href="childcare/index.html">💰 Childcare Cost Estimator</a></h4>
+                    <p>Budget for daycare, nanny, or babysitter costs by location.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="baby-cost/index.html">👶 First Year Baby Cost Calculator</a></h4>
+                    <p>Estimate total first-year expenses from birth to 12 months.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="return-to-work/index.html">💼 Return-to-Work Budget</a></h4>
+                    <p>Calculate net gain/loss of going back to work after leave.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="faqs">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3>How much maternity leave can I take in New Jersey?</h3>
+                <p>
+                    NJ offers: 6 weeks Temporary Disability Insurance (TDI) + 12 weeks Family Leave Insurance (FLI) = 18 weeks total paid leave. 
+                    You can extend with FMLA (12 additional weeks unpaid). Most mothers take 12-18 weeks paid, then return.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Do I get paid during FMLA leave?</h3>
+                <p>
+                    No. FMLA is unpaid, but your job is protected and health insurance continues (at your cost). 
+                    You can use accrued PTO/sick leave during FMLA, but that's separate. Some states layer paid leave (TDI/FLI/PFL) on top of FMLA.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What counts toward the FMLA 1,250 hours?</h3>
+                <p>
+                    All paid hours (wages, PTO, vacation) in your past 12 months. Unpaid leave, layoffs, or unpaid time off don't count. 
+                    Sick leave usually counts. Talk to HR about your specific situation.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Are maternity benefits taxable?</h3>
+                <p>
+                    Yes. State disability and family leave benefits are taxable federal income. Taxes are usually NOT withheld, 
+                    so budget 20-25% for taxes owed. Consult a tax professional about estimated tax payments during leave.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can my employer fire me for taking maternity leave?</h3>
+                <p>
+                    No. FMLA and state laws (in CA, NJ, NY, etc.) prohibit retaliation. Your job is protected and you must return to the same or equivalent position. 
+                    Document any retaliation and consult an employment attorney.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What if my baby is born earlier than expected?</h3>
+                <p>
+                    You can start leave when birth happens, not the due date. Your leave clock starts from actual birth. 
+                    Adjust your timeline in the calculator if this happens to get accurate estimates.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I take paternity leave in the US?</h3>
+                <p>
+                    Yes. FMLA covers both maternity and paternity leave. Some states (CA, NJ, NY) offer paid paternity leave. 
+                    However, many fathers don't claim leave due to workplace stigma or lack of awareness. You have the legal right.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do I apply for maternity benefits?</h3>
+                <p>
+                    Process varies by state: NJ = myleavebenefits.nj.gov, CA = dir.ca.gov/sdi, NY = ny.gov/pfl. 
+                    Apply 4-6 weeks before your due date. Have your employer info, salary, and employment verification ready.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 Maternity & Paternity Leave Calculator. Plan your leave, secure your future.</p>
+    </div>
+</footer>
+
+<script src="leave-script.js"></script>
+
 
 </body>
 </html>
